@@ -1,7 +1,7 @@
 const React = require('react');
 const { Component } = React;
 const { createRef } = React;
-const Try = require('./Try')
+const Try = require('./Try');
 
 function getNumbers() {
     // 숫자 4개 겹치지 않고 랜덤하게 뽑기
