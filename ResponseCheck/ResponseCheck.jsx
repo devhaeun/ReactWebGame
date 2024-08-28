@@ -40,9 +40,9 @@ const ResponseCheck = () => {
             >
                 {message}
             </div>
-            <div>{result.length === 0
-                ? null
-                : <div>평균시간: {result.reduce((a,c) => a+c) / result.length}ms</div>}
+            <div>평균 시간: {result.length === 0
+                ? <span>0</span>
+                : <span>{result.reduce((a,c) => a+c) / result.length}ms</span>}
             </div>
         </>
     );
