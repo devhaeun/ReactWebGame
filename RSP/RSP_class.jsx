@@ -30,7 +30,7 @@ class RSP extends Component {
         this.interval = setInterval(this.changeHand, 100);
     }
 
-    componentDidUnMount() {
+    componentWillUnMount() {
         clearInterval(this.interval);
     }
 
