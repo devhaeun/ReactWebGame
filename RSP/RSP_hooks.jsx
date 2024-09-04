@@ -1,7 +1,8 @@
 const React = require('react');
 const { useState } = React;
-const { useRef } = React;
-const { useEffect } = React;
+// // const { useRef } = React;
+// // const { useEffect } = React;
+const useInterval = require('./useInterval');
 
 const rspCoords = {
     바위: '0',
@@ -25,8 +26,6 @@ const RSP = () => {
     const [score, setScore] = useState(0);
     const [isRunning, setIsRunning] = useState(true);
 
-    const interval = useRef();
-
     const changeHand = () => {
         if (imgCoord === rspCoords.바위) {
             setImgCoord(rspCoords.가위);
@@ -38,9 +37,9 @@ const RSP = () => {
     };
 
     const onClickBtn = (choice) => () => {
-        // if (isRunning) {
-        //     setIsRunning(false);
-            clearInterval(interval.current);
+        if (isRunning) {
+            setIsRunning(false);
+            // clearInterval(interval.current); <---- (1) 커스텀 훅 사용하지 않은 경우
             const myScore = scores[choice];
             const cpuScore = scores[computerChoice(imgCoord)];
             const diff = myScore - cpuScore;
@@ -56,19 +55,21 @@ const RSP = () => {
             }
 
             setTimeout(() => {
-                // setIsRunning(true);
-                interval.current = setInterval(changeHand, 100);
+                setIsRunning(true);
+                // interval.current = setInterval(changeHand, 100); <---- (1)
             }, 1000);
-        // }
+        }
     };
 
-    useEffect(() => {
-        interval.current = setInterval(changeHand, 100);
-        return () => {
-            console.log('종료');
-            clearInterval(interval.current);
-        }
-    }, [imgCoord]);
+    useInterval(changeHand, isRunning ? 100 : null);
+
+    // (1)
+    // useEffect(() => {
+    //     interval.current = setInterval(changeHand, 100);
+    //     return () => {
+    //         clearInterval(interval.current);
+    //     }
+    // }, [imgCoord]);
 
     return (
         <>
@@ -82,6 +83,6 @@ const RSP = () => {
             <div>현재 {score}점</div>
         </>
     );
-}
+};
 
 module.exports = RSP;
