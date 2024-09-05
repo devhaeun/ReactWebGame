@@ -3,6 +3,7 @@ const { useState } = React;
 const { useRef } = React;
 const { useEffect } = React;
 const { useMemo } = React;
+const { useCallback } = React;
 const Ball = require('./Ball')
 
 function getWinNumbers() {
@@ -44,14 +45,15 @@ const Lotto = () => {
         };
     }, [timeouts.current]);
 
-    const onClickRedo = () => {
+    const onClickRedo = useCallback(() => {
         console.log('onClickRedo');
+        console.log(winNumbers);
         setWinNumbers(getWinNumbers());
         setWinBalls([]);
         setBonus(null);
         setRedo(false);
         timeouts.current = [];
-    };
+    }, [winNumbers]);
 
     return (
         <>
