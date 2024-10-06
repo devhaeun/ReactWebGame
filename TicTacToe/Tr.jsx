@@ -1,7 +1,9 @@
-const React = require('react');
-const Td = require('./Td');
+// const React = require('react');
+// const Td = require('./Td');
+import React, { memo } from 'react';
+import Td from './Td';
 
-const Tr = ({ rowData, rowIndex, dispatch }) => {
+const Tr = memo(({ rowData, rowIndex, dispatch }) => {
     return (
         <tr>
             {Array(rowData.length).fill().map((td, i) => (
@@ -9,6 +11,7 @@ const Tr = ({ rowData, rowIndex, dispatch }) => {
             ))}
         </tr>
     );
-}
+});
 
-module.exports = Tr;
+// module.exports = Tr;
+export default Tr;

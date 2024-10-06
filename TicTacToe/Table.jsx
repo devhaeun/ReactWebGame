@@ -1,7 +1,9 @@
-const React = require('react');
-const Tr = require('./Tr');
+// const React = require('react');
+// const Tr = require('./Tr');
+import React, {memo} from 'react';
+import Tr from './Tr';
 
-const Table = ({ tableData, dispatch }) => {
+const Table = memo(({ tableData, dispatch }) => {
     return (
         <table>
             <tbody>
@@ -11,6 +13,7 @@ const Table = ({ tableData, dispatch }) => {
             </tbody>
         </table>
     );
-}
+});
 
-module.exports = Table;
+// module.exports = Table;
+export default Table;

@@ -1,6 +1,8 @@
-const React = require('react');
-const { useReducer, useCallback, useEffect } = require('react');
-const Table = require('./Table')
+// const React = require('react');
+// const { useReducer, useCallback, useEffect } = require('react');
+// const Table = require('./Table')
+import React, { useReducer, useCallback, useEffect } from 'react';
+import Table from './Table';
 
 const initialState = {
     winner: '',
@@ -13,10 +15,10 @@ const initialState = {
     recentCell: [-1, -1],
 };
 
-const SET_WINNER = 'SET_WINNER';
-const CLICK_CELL = 'CLICK_CELL';
-const RESET_GAME = 'RESET_GAME';
-const CHANGE_TURN = 'CHANGE_TURN';
+export const SET_WINNER = 'SET_WINNER';
+export const CLICK_CELL = 'CLICK_CELL';
+export const RESET_GAME = 'RESET_GAME';
+export const CHANGE_TURN = 'CHANGE_TURN';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -67,9 +69,11 @@ const TicTacToe = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const { tableData, turn, winner, recentCell } = state;
 
-    const onClickTable = useCallback(() => {
-        dispatch({ type: SET_WINNER, winner: 'O' });
-    }, []);
+    // const onClickTable = useCallback(() => {
+    //     console.log("winner: ", winner);
+    //     if (winner) return;
+    //     dispatch({ type: SET_WINNER, winner: 'O' });
+    // }, []);
 
     useEffect(() => {
         const [row, cell] = recentCell;
@@ -89,9 +93,10 @@ const TicTacToe = () => {
         if (tableData[0][2] === turn && tableData[1][1] === turn && tableData[2][0] === turn) {
             win = true;
         }
-        console.log(win, row, cell, tableData, turn);
+        // console.log(win, row, cell, tableData, turn);
         if (win) {
             dispatch({ type: SET_WINNER, winner: turn });
+            // setTimeout(() => dispatch({ type: RESET_GAME }), 5000);
             dispatch({ type: RESET_GAME });
         } else {
             let all = true;
@@ -112,10 +117,11 @@ const TicTacToe = () => {
     }, [recentCell]);
     return (
         <>
-            <Table onClick={onClickTable} tableData={tableData} dispatch={dispatch} />
+            <Table tableData={tableData} dispatch={dispatch} />
             {winner && <div>{winner}님의 승리</div>}
         </>
     )
 };
 
-module.exports = TicTacToe, {SET_WINNER, CLICK_CELL, CHANGE_TURN, RESET_GAME};
+// module.exports = TicTacToe;
+export default TicTacToe;
